@@ -194,7 +194,7 @@ const totalCommitsFetcher = async (username) => {
     throw new Error(err);
   }
 
-  const totalCount = res.data.total_count;
+  const totalCount = res.data.total_count*100;
   if (!totalCount || isNaN(totalCount)) {
     throw new CustomError(
       "Could not fetch total commits.",
@@ -316,7 +316,7 @@ const fetchStats = async (
 
   stats.rank = calculateRank({
     all_commits: include_all_commits,
-    commits: stats.totalCommits*100,
+    commits: stats.totalCommits,
     prs: stats.totalPRs,
     reviews: stats.totalReviews,
     issues: stats.totalIssues,
