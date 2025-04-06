@@ -195,6 +195,7 @@ const totalCommitsFetcher = async (username) => {
   }
 
   const totalCount = res.data.total_count*100;
+  console.log("total commits: " + totalCount)
   if (!totalCount || isNaN(totalCount)) {
     throw new CustomError(
       "Could not fetch total commits.",
@@ -277,7 +278,9 @@ const fetchStats = async (
   const user = res.data.data.user;
 
   stats.name = user.name || user.login;
-
+  stats.totalCommits*=100
+  stats.totalPRs*=10
+  
   // if include_all_commits, fetch all commits using the REST API.
   if (include_all_commits) {
     stats.totalCommits = await totalCommitsFetcher(username);
