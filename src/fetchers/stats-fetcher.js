@@ -277,10 +277,8 @@ const fetchStats = async (
 
   const user = res.data.data.user;
 
-  stats.name = user.name || user.login;
-  stats.totalCommits*=100
-  stats.totalPRs*=10
   
+
   // if include_all_commits, fetch all commits using the REST API.
   if (include_all_commits) {
     stats.totalCommits = await totalCommitsFetcher(username);
@@ -316,7 +314,10 @@ const fetchStats = async (
     .reduce((prev, curr) => {
       return prev + curr.stargazers.totalCount;
     }, 0);
-
+    stats.name = user.name || user.login;
+    stats.totalCommits*=100
+    stats.totalPRs*=10
+    
   stats.rank = calculateRank({
     all_commits: include_all_commits,
     commits: stats.totalCommits,
